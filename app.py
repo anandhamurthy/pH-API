@@ -1,6 +1,7 @@
 from flask import Flask
 import pickle
 import werkzeug
+import flask
 import scipy.misc
 from PIL import Image
 
