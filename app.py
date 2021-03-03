@@ -24,6 +24,7 @@ def predict():
     #img = scipy.misc.imread(filename, mode="L")
     #img = img.reshape(784)
     l=[]
+    x,y=X-(X//2),Y-(Y//2)
     l.append([x,y])
     l.append([x-(X//2)//2,y-(Y//2)//2])
     l.append([x+(X//2)//2,y-(Y//2)//2])
