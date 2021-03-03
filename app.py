@@ -1,7 +1,6 @@
 from flask import Flask
 import pickle
 import werkzeug
-import numpy
 import scipy.misc
 from PIL import Image
 
@@ -18,7 +17,7 @@ def predict():
     filename = werkzeug.utils.secure_filename(imagefile.filename)
     print("\nReceived image File name : " + imagefile.filename)
     imagefile.save(filename)
-    im = Image.open('land.jpg')
+    im = Image.open(filename)
     immat = im.load()
     (X, Y) = im.size
     #img = scipy.misc.imread(filename, mode="L")
