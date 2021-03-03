@@ -1,34 +1,39 @@
 from flask import Flask
 import pickle
-import numpy as np
-import pandas as pd
-from sklearn.preprocessing import OneHotEncoder
+import werkzeug
+import numpy
+import scipy.misc
+from PIL import Image
 
-filename = 'finalmodel.pkl'
-classifier = pickle.load(open(filename, 'rb'))
-df = pd.read_csv("teams.csv")
-ohe = OneHotEncoder(sparse=False)
-ohe.fit_transform(df[['team1','team2']])
-
-result={'Sunrisers Hyderabad': 0,
- 'Mumbai Indians': 1,
- 'Royal Challengers Bangalore': 2,
- 'Kolkata Knight Riders': 3,
- 'Chennai Super Kings': 4,
- 'Delhi Daredevils': 5,
- 'Rajasthan Royals': 6,
- 'Kings XI Punjab': 7}
+filename = 'ph_model.pkl'
+model = pickle.load(open(filename, 'rb'))
 
 app = Flask(__name__)
 
-@app.route('/predict/<msg>',methods=['GET','POST'])
-def predict(msg):
-    l=msg.split(',')
-    user_team = [[l[0], l[1]]]
-    team = ohe.transform(user_team)
-    team = np.column_stack([team, np.array([int(l[2])])])
-    team_day = np.array(team).reshape((1, -1))
-    return list(result.keys())[list(result.values()).index(classifier.predict(team_day).tolist()[0])]
+avg=0
+
+@app.route('/',methods=['GET','POST'])
+def predict():
+    imagefile = flask.request.files['image0']
+    filename = werkzeug.utils.secure_filename(imagefile.filename)
+    print("\nReceived image File name : " + imagefile.filename)
+    imagefile.save(filename)
+    im = Image.open('land.jpg')
+    immat = im.load()
+    (X, Y) = im.size
+    #img = scipy.misc.imread(filename, mode="L")
+    #img = img.reshape(784)
+    l=[]
+    l.append([x,y])
+    l.append([x-(X//2)//2,y-(Y//2)//2])
+    l.append([x+(X//2)//2,y-(Y//2)//2])
+    l.append([x-(X//2)//2,y+(Y//2)//2])
+    l.append([x+(X//2)//2,y+(Y//2)//2])
+    image_rgb = im.convert("RGB")
+    for i in l:
+        rgb_pixel_value = image_rgb.getpixel((i[0],i[1]))
+        avg+=model.predict([[rgb_pixel_value[0],rgb_pixel_value[1],rgb_pixel_value[2]]])
+    return str(avg/5)
 
 
 if __name__ == '__main__':
