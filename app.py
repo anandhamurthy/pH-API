@@ -10,8 +10,6 @@ model = pickle.load(open(filename, 'rb'))
 
 app = Flask(__name__)
 
-avg=0
-
 @app.route('/',methods=['GET','POST'])
 def predict():
     imagefile = flask.request.files['image0']
@@ -24,6 +22,7 @@ def predict():
     #img = scipy.misc.imread(filename, mode="L")
     #img = img.reshape(784)
     l=[]
+    avg=0
     x,y=X-(X//2),Y-(Y//2)
     l.append([x,y])
     l.append([x-(X//2)//2,y-(Y//2)//2])
