@@ -44,7 +44,7 @@ def predict():
     for i in l:
         rgb_pixel_value = image_rgb.getpixel((i[0],i[1]))
         avg+=model.predict([[rgb_pixel_value[0],rgb_pixel_value[1],rgb_pixel_value[2]]])
-    return getDetails(str(avg/5)[1:-1])
+    return getDetails(int(str(avg/5)[1:-1]))
 
 if __name__ == '__main__':
     app.run(debug=True)
