@@ -10,7 +10,7 @@ model = pickle.load(open(filename, 'rb'))
 
 app = Flask(__name__)
 
-def get_details(ph_value):
+def getDetails(ph_value):
     desc=''
     if ph_value>=6.0 and ph_value<=7.5:
         desc="Your Argiculture Land is ready to grown Crops."
