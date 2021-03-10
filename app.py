@@ -54,7 +54,7 @@ def getDetails(ph_value):
         'status': 200,
         'message': 'OK',
         'desc': desc,
-        'fertilizer': fetilizer,
+        'fertilizer': fertilier,
         'ph_value': ph_value
     }
     return jsonify(response)
