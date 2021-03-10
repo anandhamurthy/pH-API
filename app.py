@@ -12,16 +12,52 @@ app = Flask(__name__)
 
 def getDetails(ph_value):
     desc=''
+    fertilier = {
+        "list" : [
+            {"name": "NPK 12:11:18",
+             "image": "https://5.imimg.com/data5/CI/MF/FF/SELLER-1393371/plantis-npk-12-11-18-500x500.jpg",
+             "material": "Nitrogen, Phosporus, Potassium"},
+            {"name": "NPK 16:8:24",
+             "image": "https://5.imimg.com/data5/FF/CA/MY-1393371/npk-16-8-24-fertilizers-500x500.jpg",
+             "material": "Nitrogen, Phosporus, Potassium"},
+            {"name": "Master NPK",
+             "image": "https://5.imimg.com/data5/CC/PB/MY-1393371/master-npk-fetilizers-500x500.png",
+             "material": "Nitrogen, Phosporus, Potassium"},
+            {"name": "NPK 20:20:20",
+             "image": "https://5.imimg.com/data5/JQ/LP/MY-1393371/npk-20-20-20-fertilizers-500x500.jpg",
+             "material": "Nitrogen, Phosporus, Potassium"},
+            {"name": "NPK 5-15-45",
+             "image": "https://5.imimg.com/data5/SN/DD/MY-1393371/npk-5-15-45-fertilizers-500x500.jpg",
+             "material": "Nitrogen, Phosporus, Potassium"},
+            {"name": "NPK 30-10-10",
+             "image": "https://5.imimg.com/data5/GN/CH/MY-1393371/npk-30-10-10-fertilizers-500x500.jpg",
+             "material": "Nitrogen, Phosporus, Potassium"},
+            {"name": "NPK 13:40:13",
+             "image": "https://5.imimg.com/data5/AW/YX/MY-1393371/npk-13-40-13-fertilizers-500x500.jpg",
+             "material": "Nitrogen, Phosporus, Potassium"},
+            {"name": "NPK 19:19:19",
+             "image": "https://5.imimg.com/data5/JP/NK/MY-1393371/npk-19-19-19-fertilizers-500x500.jpg",
+             "material": "Nitrogen, Phosporus, Potassium"},
+            {"name": "NPK 6:12:36",
+             "image": "https://5.imimg.com/data5/PG/VW/MY-1393371/npk-6-12-36-fertilizers-500x500.jpg",
+             "material": "Nitrogen, Phosporus, Potassium"}
+                ]
+    }
     if ph_value>=6.0 and ph_value<=7.5:
         desc="Your Argiculture Land is ready to grown Crops."
+        fertilizer={"list":[]}
     elif ph_value<6.0:
         desc="Land is Acidic, Some nutrients such as nitrogen, phosphorus, and potassium are less available."
     elif ph_value>7.5:
         desc="Land is very Alkaline, Iron, manganese, and phosphorus are less available."
-    return jsonify(
-        ph_value=ph_value,
-        description=desc
-    )
+    response = {
+        'status': 200,
+        'message': 'OK',
+        'desc': desc,
+        'fertilizer': fetilizer,
+        'ph_value': ph_value
+    }
+    return jsonify(response)
 
 @app.route('/',methods=['GET','POST'])
 def predict():
